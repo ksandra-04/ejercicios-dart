@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 // ===================== Utilidades de entrada/salida =====================
 
@@ -75,6 +76,30 @@ class DoubleOrTriple extends Ejercicio {
   }
 }
 
+// 3. Root or Square
+class RootOrSquare extends Ejercicio {
+  RootOrSquare() : super('Root or Square');
+
+  @override
+  void ejecutar() {
+    final n = leerNumero('Ingresa un número: ');
+    // sqrt viene de dart:math; en C# sería Math.Sqrt.
+    final resultado = n > 0 ? sqrt(n) : n * n;
+    print('Resultado: ${fmt(resultado)}');
+  }
+}
+
+// 4. Circle Perimeter
+class CirclePerimeter extends Ejercicio {
+  CirclePerimeter() : super('Circle Perimeter');
+
+  @override
+  void ejecutar() {
+    final r = leerNumero('Radio del círculo: ');
+    print('Resultado: ${(2 * pi * r).toStringAsFixed(2)}');
+  }
+}
+
 // ===================== Menú principal =====================
 
 void main() {
@@ -83,6 +108,8 @@ void main() {
   final List<Ejercicio> ejercicios = [
     PositivePower(),
     DoubleOrTriple(),
+    RootOrSquare(),
+    CirclePerimeter(),
   ];
 
   while (true) {
