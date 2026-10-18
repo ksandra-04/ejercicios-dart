@@ -46,12 +46,44 @@ abstract class Ejercicio {
   void ejecutar();
 }
 
+// 1. Positive Power
+// extends = herencia; super(...) llama al constructor de Ejercicio
+// (equivale a ": base(...)" en C#).
+class PositivePower extends Ejercicio {
+  PositivePower() : super('Positive Power');
+
+  // @override es una anotación opcional, pero avisa si el método no existe
+  // en la clase base. En C# se usa la palabra clave override.
+  @override
+  void ejecutar() {
+    final n = leerNumero('Ingresa un número: ');
+    print(n < 0 ? 'Número negativo.' : 'Resultado: ${fmt(n * n)}');
+  }
+}
+
+// 2. Double or Triple
+class DoubleOrTriple extends Ejercicio {
+  DoubleOrTriple() : super('Double or Triple');
+
+  @override
+  void ejecutar() {
+    final a = leerNumero('Primer número: ');
+    final b = leerNumero('Segundo número: ');
+    // Si son iguales (6, 6) el ejemplo da 12, es decir, el doble del primero.
+    final resultado = a >= b ? a * 2 : b * 3;
+    print('Resultado: ${fmt(resultado)}');
+  }
+}
+
 // ===================== Menú principal =====================
 
 void main() {
   // La lista es de tipo Ejercicio (la clase base): puede guardar cualquier
   // subclase y el menú no necesita saber cuál es cada una.
-  final List<Ejercicio> ejercicios = [];
+  final List<Ejercicio> ejercicios = [
+    PositivePower(),
+    DoubleOrTriple(),
+  ];
 
   while (true) {
     print('\n===== EJERCICIOS DART =====');
