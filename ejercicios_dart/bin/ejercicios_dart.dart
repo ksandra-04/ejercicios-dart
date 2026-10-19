@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:ejercicios_dart/fraccion.dart';
+
 // ===================== Utilidades de entrada/salida =====================
 
 // stdin.readLineSync() devuelve String? (puede ser null): con ?. y ?? se
@@ -119,6 +121,90 @@ class MidweekDay extends Ejercicio {
   }
 }
 
+// 6. Tax Calculator
+class TaxCalculator extends Ejercicio {
+  TaxCalculator() : super('Tax Calculator');
+
+  // static const: constantes de la clase, conocidas en tiempo de compilación.
+  static const double limite = 12000;
+  static const double tasa = 0.15;
+
+  @override
+  void ejecutar() {
+    final salario = leerNumero('Salario anual: ');
+    if (salario > limite) {
+      print('Impuesto a pagar: ${fmt((salario - limite) * tasa)}');
+    } else {
+      print('No debe impuestos.');
+    }
+  }
+}
+
+// 7. Remainder Finder
+class RemainderFinder extends Ejercicio {
+  RemainderFinder() : super('Remainder Finder');
+
+  @override
+  void ejecutar() {
+    final a = leerEntero('Dividendo: ');
+    final b = leerEntero('Divisor: ');
+    // En Dart, % entre enteros con divisor 0 lanza una excepción: se valida antes.
+    if (b == 0) {
+      print('No se puede dividir entre cero.');
+      return;
+    }
+    print('Resultado: ${a % b}');
+  }
+}
+
+// 8. Sum of Evens
+class SumOfEvens extends Ejercicio {
+  SumOfEvens() : super('Sum of Evens');
+
+  @override
+  void ejecutar() {
+    // var infiere el tipo (int), como var en C#.
+    var suma = 0;
+    for (var i = 2; i <= 50; i += 2) {
+      suma += i;
+    }
+    print('Suma de pares entre 1 y 50: $suma');
+  }
+}
+
+// 9. Fraction Difference (usa la clase Fraccion de lib/fraccion.dart)
+class FractionDifference extends Ejercicio {
+  FractionDifference() : super('Fraction Difference');
+
+  Fraccion _leer(String mensaje) {
+    while (true) {
+      final f = Fraccion.parse(leerTexto(mensaje));
+      if (f != null) return f;
+      print('Formato no válido. Usa por ejemplo 1/2');
+    }
+  }
+
+  @override
+  void ejecutar() {
+    final a = _leer('Primera fracción (ej. 1/2): ');
+    final b = _leer('Segunda fracción (ej. 1/3): ');
+    // a - b llama al operador sobrecargado de Fraccion.
+    print('Resultado: ${a - b}');
+  }
+}
+
+// 10. String Length
+class StringLength extends Ejercicio {
+  StringLength() : super('String Length');
+
+  @override
+  void ejecutar() {
+    final palabra = leerTexto('Ingresa una palabra: ');
+    // length es una propiedad (sin paréntesis), igual que Length en C#.
+    print('Resultado: ${palabra.length}');
+  }
+}
+
 // ===================== Menú principal =====================
 
 void main() {
@@ -130,6 +216,11 @@ void main() {
     RootOrSquare(),
     CirclePerimeter(),
     MidweekDay(),
+    TaxCalculator(),
+    RemainderFinder(),
+    SumOfEvens(),
+    FractionDifference(),
+    StringLength(),
   ];
 
   while (true) {
