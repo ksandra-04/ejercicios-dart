@@ -205,6 +205,37 @@ class StringLength extends Ejercicio {
   }
 }
 
+// 11. Average of Four
+class AverageOfFour extends Ejercicio {
+  AverageOfFour() : super('Average of Four');
+
+  @override
+  void ejecutar() {
+    // "collection for": el bucle va dentro de la lista y la llena.
+    // En C# se haría con un for y List.Add, o con LINQ.
+    final numeros = [
+      for (var i = 1; i <= 4; i++) leerNumero('Número $i: '),
+    ];
+    // reduce combina los elementos de dos en dos (como Aggregate en LINQ).
+    final promedio = numeros.reduce((a, b) => a + b) / numeros.length;
+    print('Resultado: ${fmt(promedio)}');
+  }
+}
+
+// 12. Smallest of Five
+class SmallestOfFive extends Ejercicio {
+  SmallestOfFive() : super('Smallest of Five');
+
+  @override
+  void ejecutar() {
+    final numeros = [
+      for (var i = 1; i <= 5; i++) leerNumero('Número $i: '),
+    ];
+    // min (de dart:math) se pasa como función: devuelve el menor de dos.
+    print('Resultado: ${fmt(numeros.reduce(min))}');
+  }
+}
+
 // ===================== Menú principal =====================
 
 void main() {
@@ -221,6 +252,8 @@ void main() {
     SumOfEvens(),
     FractionDifference(),
     StringLength(),
+    AverageOfFour(),
+    SmallestOfFive(),
   ];
 
   while (true) {
