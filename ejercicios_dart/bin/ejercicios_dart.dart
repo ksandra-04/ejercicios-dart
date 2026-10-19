@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -7,9 +8,21 @@ import 'package:ejercicios_dart/fraccion.dart';
 
 // stdin.readLineSync() devuelve String? (puede ser null): con ?. y ?? se
 // convierte en un String seguro antes de usarlo (null safety).
+//
+// En Windows, Dart decodifica la entrada con la codificación del sistema
+// (Windows-1252), pero terminales como Git Bash envían UTF-8 y las tildes
+// llegaban dañadas ("É" -> "Ã‰"). Se leen los bytes tal cual (latin1 no los
+// altera), se intenta UTF-8 y, si no es válido, se usa la del sistema.
 String leerTexto(String mensaje) {
   stdout.write(mensaje);
-  return stdin.readLineSync()?.trim() ?? '';
+  final linea = stdin.readLineSync(encoding: latin1);
+  if (linea == null) return '';
+  final bytes = latin1.encode(linea);
+  try {
+    return utf8.decode(bytes).trim();
+  } on FormatException {
+    return systemEncoding.decode(bytes).trim();
+  }
 }
 
 // tryParse devuelve null si el texto no es un número, así que se repite
@@ -205,6 +218,90 @@ class StringLength extends Ejercicio {
   }
 }
 
+// 11. Average of Four
+class AverageOfFour extends Ejercicio {
+  AverageOfFour() : super('Average of Four');
+
+  @override
+  void ejecutar() {
+    // "collection for": el bucle va dentro de la lista y la llena.
+    // En C# se haría con un for y List.Add, o con LINQ.
+    final numeros = [
+      for (var i = 1; i <= 4; i++) leerNumero('Número $i: '),
+    ];
+    // reduce combina los elementos de dos en dos (como Aggregate en LINQ).
+    final promedio = numeros.reduce((a, b) => a + b) / numeros.length;
+    print('Resultado: ${fmt(promedio)}');
+  }
+}
+
+// 12. Smallest of Five
+class SmallestOfFive extends Ejercicio {
+  SmallestOfFive() : super('Smallest of Five');
+
+  @override
+  void ejecutar() {
+    final numeros = [
+      for (var i = 1; i <= 5; i++) leerNumero('Número $i: '),
+    ];
+    // min (de dart:math) se pasa como función: devuelve el menor de dos.
+    print('Resultado: ${fmt(numeros.reduce(min))}');
+  }
+}
+
+// 13. Vowel Counter
+class VowelCounter extends Ejercicio {
+  VowelCounter() : super('Vowel Counter');
+
+  // Incluye vocales con tilde y diéresis.
+  static const _vocales = 'aeiouáéíóúü';
+
+  @override
+  void ejecutar() {
+    final palabra = leerTexto('Ingresa una palabra: ').toLowerCase();
+    // split('') separa la palabra en letras; where filtra (como Where en LINQ).
+    final cantidad =
+        palabra.split('').where((c) => _vocales.contains(c)).length;
+    print('Resultado: $cantidad');
+  }
+}
+
+// 14. Factorial Finder
+class FactorialFinder extends Ejercicio {
+  FactorialFinder() : super('Factorial Finder');
+
+  // BigInt evita el desbordamiento: un int de 64 bits solo llega hasta 20!.
+  BigInt factorial(int n) {
+    var resultado = BigInt.one;
+    for (var i = 2; i <= n; i++) {
+      resultado *= BigInt.from(i);
+    }
+    return resultado;
+  }
+
+  @override
+  void ejecutar() {
+    final n = leerEntero('Ingresa un número: ');
+    if (n < 0) {
+      print('No existe el factorial de un número negativo.');
+      return;
+    }
+    print('Resultado: ${factorial(n)}');
+  }
+}
+
+// 15. InRange Validator
+class InRangeValidator extends Ejercicio {
+  InRangeValidator() : super('InRange Validator');
+
+  @override
+  void ejecutar() {
+    final n = leerNumero('Ingresa un número: ');
+    // Ambos extremos incluidos: >= y <=.
+    print(n >= 10 && n <= 20 ? 'Está en el rango.' : 'Fuera del rango.');
+  }
+}
+
 // ===================== Menú principal =====================
 
 void main() {
@@ -221,6 +318,11 @@ void main() {
     SumOfEvens(),
     FractionDifference(),
     StringLength(),
+    AverageOfFour(),
+    SmallestOfFive(),
+    VowelCounter(),
+    FactorialFinder(),
+    InRangeValidator(),
   ];
 
   while (true) {
