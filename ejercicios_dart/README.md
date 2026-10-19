@@ -1,2 +1,3 @@
-A sample command-line application with an entrypoint in `bin/`, library code
-in `lib/`, and example unit test in `test/`.
+Proyecto de consola con los 15 ejercicios del taller en Dart.
+
+Consulta el [README principal](../README.md) para la descripción, cómo ejecutarlo y la tabla de ejercicios.
