@@ -193,6 +193,18 @@ class FractionDifference extends Ejercicio {
   }
 }
 
+// 10. String Length
+class StringLength extends Ejercicio {
+  StringLength() : super('String Length');
+
+  @override
+  void ejecutar() {
+    final palabra = leerTexto('Ingresa una palabra: ');
+    // length es una propiedad (sin paréntesis), igual que Length en C#.
+    print('Resultado: ${palabra.length}');
+  }
+}
+
 // ===================== Menú principal =====================
 
 void main() {
@@ -208,6 +220,7 @@ void main() {
     RemainderFinder(),
     SumOfEvens(),
     FractionDifference(),
+    StringLength(),
   ];
 
   while (true) {
