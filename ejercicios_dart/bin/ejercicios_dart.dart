@@ -290,6 +290,18 @@ class FactorialFinder extends Ejercicio {
   }
 }
 
+// 15. InRange Validator
+class InRangeValidator extends Ejercicio {
+  InRangeValidator() : super('InRange Validator');
+
+  @override
+  void ejecutar() {
+    final n = leerNumero('Ingresa un número: ');
+    // Ambos extremos incluidos: >= y <=.
+    print(n >= 10 && n <= 20 ? 'Está en el rango.' : 'Fuera del rango.');
+  }
+}
+
 // ===================== Menú principal =====================
 
 void main() {
@@ -310,6 +322,7 @@ void main() {
     SmallestOfFive(),
     VowelCounter(),
     FactorialFinder(),
+    InRangeValidator(),
   ];
 
   while (true) {
