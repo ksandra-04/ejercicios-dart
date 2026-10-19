@@ -100,6 +100,25 @@ class CirclePerimeter extends Ejercicio {
   }
 }
 
+// 5. Midweek Day
+class MidweekDay extends Ejercicio {
+  MidweekDay() : super('Midweek Day');
+
+  // El guion bajo hace privada la lista. En Dart la privacidad es por
+  // archivo (librería), no por clase como el private de C#.
+  static const _dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
+
+  @override
+  void ejecutar() {
+    final n = leerEntero('Número entre 1 y 7: ');
+    if (n >= 1 && n <= 5) {
+      print('Resultado: ${_dias[n - 1]}');
+    } else {
+      print('Número fuera del rango laboral.');
+    }
+  }
+}
+
 // ===================== Menú principal =====================
 
 void main() {
@@ -110,6 +129,7 @@ void main() {
     DoubleOrTriple(),
     RootOrSquare(),
     CirclePerimeter(),
+    MidweekDay(),
   ];
 
   while (true) {
