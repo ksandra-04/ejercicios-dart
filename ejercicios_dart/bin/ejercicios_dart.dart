@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -7,9 +8,21 @@ import 'package:ejercicios_dart/fraccion.dart';
 
 // stdin.readLineSync() devuelve String? (puede ser null): con ?. y ?? se
 // convierte en un String seguro antes de usarlo (null safety).
+//
+// En Windows, Dart decodifica la entrada con la codificación del sistema
+// (Windows-1252), pero terminales como Git Bash envían UTF-8 y las tildes
+// llegaban dañadas ("É" -> "Ã‰"). Se leen los bytes tal cual (latin1 no los
+// altera), se intenta UTF-8 y, si no es válido, se usa la del sistema.
 String leerTexto(String mensaje) {
   stdout.write(mensaje);
-  return stdin.readLineSync()?.trim() ?? '';
+  final linea = stdin.readLineSync(encoding: latin1);
+  if (linea == null) return '';
+  final bytes = latin1.encode(linea);
+  try {
+    return utf8.decode(bytes).trim();
+  } on FormatException {
+    return systemEncoding.decode(bytes).trim();
+  }
 }
 
 // tryParse devuelve null si el texto no es un número, así que se repite
