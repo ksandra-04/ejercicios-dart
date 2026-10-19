@@ -155,6 +155,21 @@ class RemainderFinder extends Ejercicio {
   }
 }
 
+// 8. Sum of Evens
+class SumOfEvens extends Ejercicio {
+  SumOfEvens() : super('Sum of Evens');
+
+  @override
+  void ejecutar() {
+    // var infiere el tipo (int), como var en C#.
+    var suma = 0;
+    for (var i = 2; i <= 50; i += 2) {
+      suma += i;
+    }
+    print('Suma de pares entre 1 y 50: $suma');
+  }
+}
+
 // ===================== Menú principal =====================
 
 void main() {
@@ -168,6 +183,7 @@ void main() {
     MidweekDay(),
     TaxCalculator(),
     RemainderFinder(),
+    SumOfEvens(),
   ];
 
   while (true) {
