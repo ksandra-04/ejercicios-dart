@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:ejercicios_dart/fraccion.dart';
+
 // ===================== Utilidades de entrada/salida =====================
 
 // stdin.readLineSync() devuelve String? (puede ser null): con ?. y ?? se
@@ -170,6 +172,27 @@ class SumOfEvens extends Ejercicio {
   }
 }
 
+// 9. Fraction Difference (usa la clase Fraccion de lib/fraccion.dart)
+class FractionDifference extends Ejercicio {
+  FractionDifference() : super('Fraction Difference');
+
+  Fraccion _leer(String mensaje) {
+    while (true) {
+      final f = Fraccion.parse(leerTexto(mensaje));
+      if (f != null) return f;
+      print('Formato no válido. Usa por ejemplo 1/2');
+    }
+  }
+
+  @override
+  void ejecutar() {
+    final a = _leer('Primera fracción (ej. 1/2): ');
+    final b = _leer('Segunda fracción (ej. 1/3): ');
+    // a - b llama al operador sobrecargado de Fraccion.
+    print('Resultado: ${a - b}');
+  }
+}
+
 // ===================== Menú principal =====================
 
 void main() {
@@ -184,6 +207,7 @@ void main() {
     TaxCalculator(),
     RemainderFinder(),
     SumOfEvens(),
+    FractionDifference(),
   ];
 
   while (true) {
