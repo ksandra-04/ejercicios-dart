@@ -236,6 +236,47 @@ class SmallestOfFive extends Ejercicio {
   }
 }
 
+// 13. Vowel Counter
+class VowelCounter extends Ejercicio {
+  VowelCounter() : super('Vowel Counter');
+
+  // Incluye vocales con tilde y diéresis.
+  static const _vocales = 'aeiouáéíóúü';
+
+  @override
+  void ejecutar() {
+    final palabra = leerTexto('Ingresa una palabra: ').toLowerCase();
+    // split('') separa la palabra en letras; where filtra (como Where en LINQ).
+    final cantidad =
+        palabra.split('').where((c) => _vocales.contains(c)).length;
+    print('Resultado: $cantidad');
+  }
+}
+
+// 14. Factorial Finder
+class FactorialFinder extends Ejercicio {
+  FactorialFinder() : super('Factorial Finder');
+
+  // BigInt evita el desbordamiento: un int de 64 bits solo llega hasta 20!.
+  BigInt factorial(int n) {
+    var resultado = BigInt.one;
+    for (var i = 2; i <= n; i++) {
+      resultado *= BigInt.from(i);
+    }
+    return resultado;
+  }
+
+  @override
+  void ejecutar() {
+    final n = leerEntero('Ingresa un número: ');
+    if (n < 0) {
+      print('No existe el factorial de un número negativo.');
+      return;
+    }
+    print('Resultado: ${factorial(n)}');
+  }
+}
+
 // ===================== Menú principal =====================
 
 void main() {
@@ -254,6 +295,8 @@ void main() {
     StringLength(),
     AverageOfFour(),
     SmallestOfFive(),
+    VowelCounter(),
+    FactorialFinder(),
   ];
 
   while (true) {
