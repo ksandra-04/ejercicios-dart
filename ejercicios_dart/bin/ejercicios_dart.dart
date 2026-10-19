@@ -119,6 +119,42 @@ class MidweekDay extends Ejercicio {
   }
 }
 
+// 6. Tax Calculator
+class TaxCalculator extends Ejercicio {
+  TaxCalculator() : super('Tax Calculator');
+
+  // static const: constantes de la clase, conocidas en tiempo de compilación.
+  static const double limite = 12000;
+  static const double tasa = 0.15;
+
+  @override
+  void ejecutar() {
+    final salario = leerNumero('Salario anual: ');
+    if (salario > limite) {
+      print('Impuesto a pagar: ${fmt((salario - limite) * tasa)}');
+    } else {
+      print('No debe impuestos.');
+    }
+  }
+}
+
+// 7. Remainder Finder
+class RemainderFinder extends Ejercicio {
+  RemainderFinder() : super('Remainder Finder');
+
+  @override
+  void ejecutar() {
+    final a = leerEntero('Dividendo: ');
+    final b = leerEntero('Divisor: ');
+    // En Dart, % entre enteros con divisor 0 lanza una excepción: se valida antes.
+    if (b == 0) {
+      print('No se puede dividir entre cero.');
+      return;
+    }
+    print('Resultado: ${a % b}');
+  }
+}
+
 // ===================== Menú principal =====================
 
 void main() {
@@ -130,6 +166,8 @@ void main() {
     RootOrSquare(),
     CirclePerimeter(),
     MidweekDay(),
+    TaxCalculator(),
+    RemainderFinder(),
   ];
 
   while (true) {
